@@ -1,6 +1,8 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
 from .models import Category, Food
+from .forms import CreateFoodForm
+from django.http import HttpResponse
 from .serializers import FoodSerializer
 from rest_framework.generics import (
     ListAPIView,
@@ -92,3 +94,33 @@ def dashboard(request):
 
 def FoodView(request):
     return render(request, 'FoodView.html')
+
+
+def create_food(request):
+    if request.method == "POST":
+        print(request.POST)  # Yuborilayotgan barcha ma’lumotlarni ko‘rish
+        form = CreateFoodForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('FoodView')
+    else:
+        form = CreateFoodForm() 
+    return render(request, 'create_food.html', context={"form": form})
+
+
+def delete_food(request, id):
+    food = Food.objects.get(id=id)
+    food.delete()
+    return redirect('FoodView')
+
+   
+def update_food(request, id):
+    food = Food.objects.get(id=id)
+    form = CreateFoodForm(instance=food)
+    
+    if request.method == 'POST':
+        form = CreateFoodForm(request.POST, instance=food)
+        if form.is_valid():
+            form.save()
+            return redirect('FoodView')  
+    return render(request, 'create_food.html', context={"form": form, "food": food})

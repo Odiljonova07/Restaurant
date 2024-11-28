@@ -1,4 +1,6 @@
 from django.contrib import admin
+from django.conf import settings
+from django.conf.urls.static import static 
 from django.urls import path
 from django.urls import re_path
 from rest_framework import permissions
@@ -7,7 +9,7 @@ from drf_yasg import openapi
 
 from app.views import (
     FoodApiView, FoodDetailAPIView,
-    FoodUpdateAPIView, FoodDeleteAPIView, FoodUpdateDeleteAPIView, get, category, dashboard, FoodView,
+    FoodUpdateAPIView, FoodDeleteAPIView, FoodUpdateDeleteAPIView, get, category, dashboard, FoodView, create_food, delete_food,update_food 
 )
 
 schema_view = get_schema_view(
@@ -33,4 +35,7 @@ urlpatterns = [
     path('api/v1/food/update/delete/<int:pk>/', FoodUpdateDeleteAPIView.as_view()),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('FoodView/', category, name='FoodView'),
-]
+    path('create_food/', create_food, name='create_food'),
+    path('delete_food/<int:id>/', delete_food, name='delete_food'),
+    path('update_food/<int:id>/', update_food, name='update_food'),
+]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

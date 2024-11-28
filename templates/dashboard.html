@@ -4,7 +4,8 @@
 {% block content %}
 {% load static %}
                 <!-- /. ROW  -->
-
+                <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+                <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
                 <div class="row">
                     <div class="col-md-3 col-sm-12 col-xs-12">
                         <div class="panel panel-primary text-center no-boder bg-color-green">
@@ -25,8 +26,7 @@
                                 <h3>52,160 </h3>
                             </div>
                             <div class="panel-footer back-footer-blue">
-                                Sales
-
+                                 <a href=""></a> Sale
                             </div>
                         </div>
                     </div>
@@ -59,6 +59,9 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">              
                         Responsive Table Example
+                        <a href="{% url 'create_food' %}" style="margin-left: 600px;" class="btn btn-primary">
+                            <box-icon name='plus'></box-icon>
+                        </a>
                     </div> 
                     <div class="panel-body">
                         <div class="table-responsive">
@@ -79,8 +82,8 @@
                                         <td>{{food.name}}</td>
                                         <td>{{food.price}}</td>
                                         <td>{{food.category}}</td>
-                                        <td><a class="btn btn-warning" href="">Update</a>
-                                            <a class="btn btn-danger" href="">Delete</a></td>
+                                        <td><a class="btn btn-warning" href="{% url 'update_food' food.id %}"><i class='bx bxs-edit'></i></a>
+                                            <a class="btn btn-danger" href="{% url 'delete_food' food.id %}"><i class='bx bxs-trash-alt'></i></a></td>
                                     </tr>
                                     {% endfor %}
                                    
